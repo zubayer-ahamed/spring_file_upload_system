@@ -1,4 +1,3 @@
-
 package com.coderslab.controller;
 
 import org.springframework.stereotype.Controller;
@@ -7,12 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class PageContoller {
-    
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String indexPage(){
+    public String indexPage() {
         return "index";
     }
-    
-    
-    
+
 }

@@ -16,7 +16,7 @@
             <input type="file" name="post_image"/>
             <input type="submit" value="Submit"/>
         </form>
-        
+
         <a href="${pageContext.request.contextPath}">Refresh page</a>
     </body>
 </html>

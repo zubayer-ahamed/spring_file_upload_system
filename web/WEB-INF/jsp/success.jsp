@@ -12,13 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
-        <h3>items: ${items}</h3>
-        <h3>path: ${path}</h3>
-        <h3>filepath: ${filepath}</h3>
-        <h3>filename: ${fileName}</h3>
-        <h3>sm: ${sm}</h3>
-        <h3>em: ${em}</h3>
-        success page
+
+        <h3>Success message: ${sm}</h3>
+        <h3>Error Message: ${em}</h3>
+        <h2>File Name: ${fileName}</h2>
     </body>
 </html>

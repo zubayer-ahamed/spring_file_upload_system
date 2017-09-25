@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
@@ -18,18 +20,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class FileUploadHelper {
 
-    
-
     //upload setting
     private static final int MEMOTY_THESHOLD = 1024 * 1024 * 5; //5MB
     private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; //40MB
     private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; //50MB
 
-    public boolean doUpload(String uploadDirectory, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Map<String, String> doUpload(String uploadDirectory, int scaledWidth, int scaledHeight, HttpServletRequest request, HttpServletResponse response) throws IOException {
         //location to store file uploaded
+        Map<String, String> returnedInfo = new HashMap<String, String>();
 
-        
-        
         PrintWriter out = response.getWriter();
         if (!ServletFileUpload.isMultipartContent(request)) {
             out.println("Error: form must have enctype=multipart/form-data");
@@ -74,14 +73,25 @@ public class FileUploadHelper {
                     //saves the file on projects folder
                     item.write(storeFile);
 
+                    //resize image
+                    if (scaledWidth > 0 && scaledHeight > 0) {
+                        String inputImagePath = filePath;
+                        String outputImagepath = filePath;
+                        ImageResizer.resize(inputImagePath, outputImagepath, scaledWidth, scaledHeight);
+                    }
+
+                    returnedInfo.put("fileName", fileName);
+                    returnedInfo.put("message", "success");
+                    return returnedInfo;
                 }
             }
 
         } catch (Exception e) {
-            
+            returnedInfo.put("message", "error");
+            returnedInfo.put("stacTrace", e.getMessage());
         }
 
-        return true;
+        return null;
     }
 
 }
