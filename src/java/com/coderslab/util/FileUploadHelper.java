@@ -62,7 +62,9 @@ public class FileUploadHelper {
             List<FileItem> items = upload.parseRequest(request);
 
             for (FileItem item : items) {
-                if (!item.isFormField()) {
+                if(item.isFormField()){
+                    returnedInfo.put(item.getFieldName(), item.getString());
+                }else if (!item.isFormField()) {
                     String fileName = new File(item.getName()).getName();
                     String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                     fileName = timeStamp + ".jpg";
